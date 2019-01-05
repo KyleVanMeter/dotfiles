@@ -1,0 +1,65 @@
+
+xterm*termName: xterm-256color
+
+!XTerm*faceName: Perfect DOS VGA 437
+XTerm*faceName: 3270-Medium Nerd Font Complete
+xterm*faceSize: 12
+
+xterm*loginShell: false
+
+!background
+*background: rgb:00/00/00
+!foreground
+*foreground: rgb:DA/A5/20
+!black                         
+*color0:         rgb:1C/1C/20
+*color8:         rgb:66/66/66
+!red
+*color1:         rgb:AE/3C/3E
+*color9:         rgb:EE/63/63
+!green                                                                        
+*color2:         rgb:4A/5C/28
+*color10:        rgb:9A/CD/32                                                      
+!brown/yellow                 
+*color3:         rgb:DA/A5/20
+*color11:        rgb:FF/C1/25
+!blue                          
+*color4:         rgb:6F/99/B4
+*color12:        rgb:7C/96/B0
+!magenta                       
+*color5:         rgb:8B/7B/8B
+*color13:        rgb:D8/BF/D8
+!cyan                          
+*color6:         rgb:0A/51/63
+*color14:        rgb:11/8F/AF
+!white                         
+*color7:         rgb:DD/DD/DD
+*color15:        rgb:FF/FF/FF
+
+xterm*pointColor:  black
+
+!*background:	rgb:00/00/00
+!*color0:	rgb:1C/1C/20
+!*color1:	rgb:AE/3C/3E
+!*color10:	rgb:9A/CD/32
+!*color11:	rgb:FF/C1/25
+!*color12:	rgb:7C/96/B0
+!*color13:	rgb:D8/BF/D8
+!*color14:	rgb:11/8F/AF
+!*color15:	rgb:FF/FF/FF
+!*color2:	rgb:4A/5C/28
+!*color3:	rgb:DA/A5/20
+!*color4:	rgb:6F/99/B4
+!*color5:	rgb:8B/7B/8B
+!*color6:	rgb:0A/51/63
+!*color7:	rgb:DD/DD/DD
+!*color8:	rgb:66/66/66
+!*color9:	rgb:EE/63/63
+!*customization:	-color
+!*foreground:	rgb:DA/A5/20
+!!XTerm*faceName:	Perfect DOS VGA 437
+!XTerm*faceName: 3270-Medium Nerd Font
+!xterm*faceSize:	15
+!xterm*loginShell:	false
+!xterm*pointColor:	black
+!xterm*termName:	xterm-256color

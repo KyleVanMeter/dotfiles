@@ -1,0 +1,112 @@
+;; -*-lisp-*-
+;;
+;; My .stumpwmrc file
+;; TODO Setup SWANK
+;; TODO add a user command prefix key.
+;; TODO put all defcommands that rely on an external command into a seperate module
+;; TODO change default font to 3270
+
+(in-package :stumpwm)
+
+(load-module "wifi")
+(load-module "ttf-fonts")
+
+;; Load swank.
+;; *prefix-key* ; swank will kick this off
+(ql:quickload :swank)
+(defcommand swank () ()
+            (swank:create-server :port 4005
+                                 :style swank:*communication-style*
+                                 :dont-close t)
+            (echo-string (current-screen)
+                         "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm)."))
+(swank)
+
+(defcommand dictionary-lookup (word)
+  ((:string "Enter word or phrase: "))
+  (setf *timeout-wait* 120)
+  (setq x (concatenate 'string "exec sdcv --non-interactive --color " word))
+  (run-shell-command x t ))
+
+(defcommand rolldice (word)
+  ((:string "Enter rolldice string: "))
+  (setf *timeout-wait* 120)
+  (setq x (concatenate 'string "rolldice " word))
+  (run-shell-command x t ))
+
+(defcommand spell-check (word)
+  ((:string "Enter word to check: "))
+  (setf *timeout-wait* 120)
+  (setq x (concatenate 'string "echo '" word "' | aspell -a"))
+  (run-shell-command x t ))
+
+
+
+(defvar *rc-user-commands*
+  (let ((m (stumpwm:make-sparse-keymap)))
+    (stumpwm:define-key m (stumpwm:kbd "d") "dictionary-lookup")
+    (stumpwm:define-key m (stumpwm:kbd "C-d") "dictionary-lookup")
+    (stumpwm:define-key m (stumpwm:kbd "f") "exec firefox")
+    (stumpwm:define-key m (stumpwm:kbd "C-f") "exec firefox")
+    (stumpwm:define-key m (stumpwm:kbd "s") "spell-check")
+    (stumpwm:define-key m (stumpwm:kbd "C-s") "spell-check")
+    (stumpwm:define-key m (stumpwm:kbd "r") "exec rolldice")
+    (stumpwm:define-key m (stumpwm:kbd "C-r") "rolldice")
+    m ; NOTE: this is important
+    ))
+
+(stumpwm:define-key stumpwm:*root-map* (stumpwm:kbd "C-c") '*rc-user-commands*)
+
+(define-key *root-map* (kbd "c") "exec xterm -ti 340")
+; vim-like move focus
+(define-key *root-map* (kbd "C-h") "move-focus left")
+(define-key *root-map* (kbd "C-j") "move-focus down")
+(define-key *root-map* (kbd "C-k") "move-focus up")
+(define-key *root-map* (kbd "C-l") "move-focus right")
+; vim like move window
+(define-key *root-map* (kbd "M-h") "move-window left")
+(define-key *root-map* (kbd "M-j") "move-window down")
+(define-key *root-map* (kbd "M-k") "move-window up")
+(define-key *root-map* (kbd "M-l") "move-window right")
+; vim like window exchange
+
+; (setf *window-format* "%m%n%s%c")
+
+;; font settings
+(set-font "3270-Medium Nerd Font Complete")
+
+;; window settings
+(setf *window-border-style* :tight)
+(set-focus-color "DarkGoldenrod")
+
+;; bar settings
+(set-bg-color "black")
+(set-fg-color "orange")
+(set-border-color "DarkGoldenrod")
+;; Center bar messages
+(setf *message-window-gravity* :center)
+(setf *input-window-gravity* :center)
+
+;; mode-line settings
+(setf *screen-mode-line-format*
+      (list "[^B%n^b] %W^>"
+            '(:eval (run-shell-command "battery | head -c 15 | tail -c 6" t))
+            "| %d | %I"
+            ))
+(setf *mode-line-timeout* 1)
+(setf *mode-line-position* :bottom)
+(setf *mode-line-background-color* "black")
+(setf *mode-line-foreground-color* "DarkOrange")
+(setf *mode-line-border-color* "DarkGoldenrod")
+(setf *mode-line-pad-y* 2)
+;; Turn on the new mode line.
+(toggle-mode-line (current-screen)
+                  (current-head))
+
+(setf *mouse-focus-policy* :click)
+
+;; Mouse cursor after C-t
+(setf *grab-pointer-foreground* (xlib:make-color :red 0.76 :green 0.25 :blue 0.5))
+(setf *grab-pointer-background* (lookup-color (current-screen) "DeepSkyBlue"))
+(setf *grab-pointer-character* 131)
+(setf *grab-pointer-character-mask* 131)

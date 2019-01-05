@@ -1,0 +1,37 @@
+
+xterm*termName: xterm-256color
+xterm*background: rgb:00/00/00
+xterm*foreground: rgb:DA/A5/20
+
+!XTerm*faceName: Perfect DOS VGA 437
+Xterm*faceName: 3270-Medium Nerd Font Complete
+xterm*faceSize: 12
+
+xterm*loginShell: false
+
+!black                         
+XTerm*color0:         rgb:1C/1C/20
+XTerm*color8:         rgb:66/66/66
+!red
+XTerm*color1:         rgb:AE/3C/3E
+XTerm*color9:         rgb:EE/63/63
+!green                                                                        
+XTerm*color2:         rgb:4A/5C/28
+XTerm*color10:        rgb:9A/CD/32                                                      
+!brown/yellow                 
+XTerm*color3:         rgb:DA/A5/20
+XTerm*color11:        rgb:FF/C1/25
+!blue                          
+XTerm*color4:         rgb:6F/99/B4
+XTerm*color12:        rgb:7C/96/B0
+!magenta                       
+XTerm*color5:         rgb:8B/7B/8B
+XTerm*color13:        rgb:D8/BF/D8
+!cyan                          
+XTerm*color6:         rgb:0A/51/63
+XTerm*color14:        rgb:11/8F/AF
+!white                         
+XTerm*color7:         rgb:DD/DD/DD
+XTerm*color15:        rgb:FF/FF/FF
+
+xterm*pointColor:  black

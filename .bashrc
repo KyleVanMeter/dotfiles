@@ -118,7 +118,6 @@ fi
 # alias tmux="TERM=screen-256color tmux -2"
 alias tmux="tmux -2"
 
-alias ping='noping'
 alias diff='colordiff'
 alias ls='ls --color=auto'
 alias dir='dir --color=auto'

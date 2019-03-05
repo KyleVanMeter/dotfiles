@@ -1,6 +1,7 @@
 ;; -*-lisp-*-
 ;;
 ;; My .stumpwmrc file
+;; TODO Add a function to increase screen brightness (C-t C-i increase, C-t C-o decrease) in /sys/class/backlight/intel_backlight/brightness (default 170)
 ;; TODO Setup SWANK
 ;; TODO add a user command prefix key.
 ;; TODO put all defcommands that rely on an external command into a seperate module
@@ -40,7 +41,46 @@
   (setq x (concatenate 'string "echo '" word "' | aspell -a"))
   (run-shell-command x t ))
 
+(defun get-file (filename)
+  (with-open-file (f filename)
+                  (loop for line = (read-line f nil)
+                        while line
+                        collect line)))
 
+(defcommand decrease-brightness
+  (setq y "/sys/class/backlight/intel_backlight/brightness")
+  (let ((x (- (parse-integer
+               (car
+                (get-file y)))
+              10)))
+    (if (> x 1)
+        then (run-shell-command
+              (concatenate 'string "sudo sh -c \"echo " x " > " y "\"") t)))
+  )
+
+(defcommand default-brightness
+  (setq y "/sys/class/backlight/intel_backlight/brightness")
+  (run-shell-command
+   (concatenate 'string "sudo sh -c \"echo" 170 " > " y "\"") t)
+  )
+
+;; (let ((x (+ 10 (parse-integer (car (get-file "/sys/class/backlight/intel_backlight/brightness")))))) (...))
+
+(defcommand increase-brightness
+  (setq y "/sys/class/backlight/intel_backlight/brightness")
+  (setq z "/sys/class/backlight/intel_backlight/max_brightness")
+  (setq MAXBRIGHTNESS (parse-integer
+                       (car
+                        (get-file z))))
+
+  (let ((x (+ (parse-integer
+               (car
+                (get-file y)))
+              10)))
+    (if (< x MAXBRIGHTNESS)
+        then (run-shell-command
+              (concatenate 'string "sudo sh -c \"echo " x " > " y "\"") t)))
+  )
 
 (defvar *rc-user-commands*
   (let ((m (stumpwm:make-sparse-keymap)))
@@ -52,6 +92,8 @@
     (stumpwm:define-key m (stumpwm:kbd "C-s") "spell-check")
     (stumpwm:define-key m (stumpwm:kbd "r") "exec rolldice")
     (stumpwm:define-key m (stumpwm:kbd "C-r") "rolldice")
+    (stumpwm:define-key m (stumpwm:kbd "C-i") "decrease-brightness")
+    (stumpwm:define-key m (stumpwm:kbd "C-o") "increase-brightness")
     m ; NOTE: this is important
     ))
 
